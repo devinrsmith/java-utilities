@@ -6,7 +6,7 @@ import subprocess
 import importlib.resources
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 _JAR_NAME = "utilities.jar"
 
