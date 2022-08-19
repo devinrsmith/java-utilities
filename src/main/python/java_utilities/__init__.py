@@ -6,7 +6,7 @@ import subprocess
 import importlib.resources
 
 
-__version__ = "0.1.2"
+__version__ = "0.2.0.dev0"
 
 _JAR_NAME = "utilities.jar"
 
@@ -21,8 +21,12 @@ def _java_executable():
     return "java.exe" if os.name == "nt" else "java"
 
 
+def _java_home():
+    return os.environ.get("JAVA_HOME")
+
+
 def _java_path_from_home():
-    java_home = os.environ.get("JAVA_HOME")
+    java_home = _java_home()
     return pathlib.Path(java_home) / "bin" / _java_executable() if java_home else None
 
 
@@ -41,7 +45,7 @@ def lookup_property(
     use_env: bool = True,
 ) -> Optional[str]:
     """
-    Lookup a Java system property.
+    Lookup a Java subprocess system property.
 
     This works by starting a subprocess. The java process used follows the priority:
 
@@ -77,18 +81,17 @@ def lookup_property(
             raise Exception(f"Exit code {exit_code}: {stderr}")
 
 
-def java_home(*, java_executable=None, use_env=True):
+def java_home() -> str:
     """
-    Lookup up the Java system property "java.home".
+    Lookup up the envorinmont variable "JAVA_HOME".
+    If not found, lookup the Java subprocess system property "java.home".
 
-    This works by starting a subprocess. See lookup_property for subprocess details.
+    See lookup_property for subprocess details.
 
-    Note: even if the JAVA_HOME environment variable is set, this may return a different value.
-
-    :param java_executable: the path-like object to the Java executable, optional
-    :param use_env: if JAVA_HOME should be used, true by default
-    :returns: the property value for java.home if found
+    :returns: java home
     """
-    return lookup_property(
-        "java.home", java_executable=java_executable, use_env=use_env
-    )
+    java_home = _java_home() or lookup_property("java.home", use_env=False)
+    if not java_home:
+        # This should not happen. The JVM should always provide java.home.
+        raise Exception("Unable to find Java suprocess system property 'java.home'")
+    return java_home
