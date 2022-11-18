@@ -1,6 +1,7 @@
 # java-utilities
 
-`java-utilities` is a very small `utility.jar` (<1KiB) that provides simple Java programs.
+`java-utilities` provides a very small 
+[utilities.jar](https://github.com/devinrsmith/java-utilities/raw/main/src/main/python/java_utilities/_jars/utilities.jar) (<1KiB) for simple Java programs.
 
 It has zero dependencies.
 
@@ -34,4 +35,4 @@ See [README-pypi.md](README-pypi.md) for more information.
 
 ## JAR
 
-The [utilities.jar](src/main/python/java_utilities/_jars/utilities.jar) is checked into the repository (as opposed to uploaded to Maven Central) as it is unlikely to be depended on as a Java library.
+The [utilities.jar](https://github.com/devinrsmith/java-utilities/raw/main/src/main/python/java_utilities/_jars/utilities.jar) is checked into the repository (as opposed to uploaded to Maven Central) as it is unlikely to be depended on as a Java library.
