@@ -3,6 +3,7 @@ from typing import Optional, Union
 import os
 import pathlib
 import subprocess
+import sys
 import importlib.resources
 
 
@@ -14,7 +15,12 @@ _LOOKUP_PROPERTIES_CLASS_NAME = "LookupProperty"
 
 
 def _jar():
-    return importlib.resources.path(_jars.__package__, _JAR_NAME)
+    if sys.version_info < (3, 9):
+        return importlib.resources.path(_jars.__package__, _JAR_NAME)
+    else:
+        return importlib.resources.as_file(
+            importlib.resources.files(_jars.__package__).joinpath(_JAR_NAME)
+        )
 
 
 def _java_executable():
