@@ -7,7 +7,7 @@ import sys
 import importlib.resources
 
 
-__version__ = "0.3.0.dev0"
+__version__ = "0.3.0"
 
 _JAR_NAME = "utilities.jar"
 
